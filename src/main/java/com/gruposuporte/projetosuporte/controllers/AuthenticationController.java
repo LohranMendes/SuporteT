@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class AuthenticationController {
@@ -33,9 +32,9 @@ public class AuthenticationController {
         return "register";
     }
 
-    @GetMapping("/register/agent") // metodo para acessar tela de cadastro do agente
+    @GetMapping("/agent") // metodo para acessar tela de cadastro do agente
     public String registerAgent() {
-        return "register";
+        return "agent";
     }
 
 
