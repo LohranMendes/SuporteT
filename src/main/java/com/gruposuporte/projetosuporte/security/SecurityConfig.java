@@ -59,7 +59,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers( mvc.pattern("/"), mvc.pattern("/css/**"), mvc.pattern("/js/**"), mvc.pattern("/register"), mvc.pattern("/login"), mvc.pattern("/home")).permitAll().anyRequest().authenticated();
+                    auth.requestMatchers(mvc.pattern("/"), mvc.pattern("/css/**"), mvc.pattern("/js/**"), mvc.pattern("/register"), mvc.pattern("/login"), mvc.pattern("/home"), mvc.pattern("/register-user")).permitAll().anyRequest().authenticated();
+                }).formLogin(form -> {
+                    form.loginPage("/login").permitAll();
                 });
 
 
