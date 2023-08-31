@@ -3,14 +3,15 @@ package com.gruposuporte.projetosuporte.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 @Controller
 @RequestMapping("/")
 
-public class HomeController {
-    
-    @GetMapping
-    public String home(){
-        return "home";
+public class TecnicosController {
+
+    @GetMapping("/tecnicos")
+    public String index(){
+        return "tecnicos/index";
     }
 
 }
