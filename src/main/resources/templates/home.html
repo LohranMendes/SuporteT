@@ -6,20 +6,18 @@
                         <br>
                         <br>
                         <br>
-                        <br>
-                        <br>
-                        <br>
                         <h1 class="display-5 fw-bold text-body-emphasis">Bem-vindo!</h1>
                         <div class="col-lg-6 mx-auto">
                           <p class="lead mb-4">Tire suas dúvidas com nossos técnicos.</p>
                           <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                            <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Login</button>
+                            <a type="button" class="btn btn-primary btn-lg px-4 gap-3" th:href="@{/login}">Login</a>
                             <p>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</p>
-                            <button type="button" class="btn btn-outline-secondary btn-lg px-4">Registre-se</button>
+                            <a type="button" class="btn btn-outline-secondary btn-lg px-4" th:href="@{/register}">Registre-se</a>
                           </div>
                         </div>
                       </div>
 
                 </div>
                 <!-- /.container-fluid -->
+              </div>
 <div th:replace="shared/footer"></div>
