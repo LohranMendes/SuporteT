@@ -36,34 +36,49 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Torne-se um técnico!</h1>
                         </div>
-                        <form class="user">
+                        <form method="post" class="user" th:action="@{/register-agent}" th:object="${user}">
+                            <div class="form-group text-right">
+                                <div>
+                                    <input type="text" class="form-control form-control-user" id="name"
+                                           placeholder="Nome completo" th:field="*{name}">
+                                    <span class="text-danger small text fw-normal text-right"
+                                          th:if="${#fields.hasErrors('name')}"
+                                          th:errors="*{name}"></span>
+                                </div>
+                            </div>
+                            <div class="form-group text-right">
+                                <div>
+                                    <input type="text" class="form-control form-control-user" id="username"
+                                           placeholder="Nome de usuário" th:field="*{username}">
+                                    <span class="text-danger small text fw-normal text-right"
+                                          th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+                                </div>
+                            </div>
+                            <div class="form-group text-right">
+                                <input type="email" class="form-control form-control-user" id="email"
+                                       placeholder="E-mail" th:field="*{email}">
+                                <span class="text-danger small text fw-normal text-right"
+                                      th:if="${#fields.hasErrors('email')}"
+                                      th:errors="*{email}"></span>
+                            </div>
                             <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                           placeholder="Primeiro Nome">
-                                </div>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                           placeholder="Útilmo Nome">
-                                </div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="password" class="form-control form-control-user" id="password"
+                                               placeholder="Senha" th:field="*{password}">
+
+                                        <span class="text-danger small text fw-normal text-right"
+                                              th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="password" class="form-control form-control-user"
+                                               id="repeatPassword"
+                                               placeholder="Repita a Senha" th:field="*{passwordConfirm}">
+                                        <span class="text-danger small text fw-normal text-right"
+                                              th:if="${#fields.hasErrors('passwordConfirm')}"
+                                              th:errors="*{passwordConfirm}"></span>
+                                    </div>
                             </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                       placeholder="Email">
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="password" class="form-control form-control-user"
-                                           id="exampleInputPassword" placeholder="Senha">
-                                </div>
-                                <div class="col-sm-6">
-                                    <input type="password" class="form-control form-control-user"
-                                           id="exampleRepeatPassword" placeholder="Repita a Senha">
-                                </div>
-                            </div>
-                            <a href="login" class="btn btn-primary btn-user btn-block">
-                                Registre a conta
-                            </a>
+                            <button type="submit" class="btn btn-primary btn-user btn-block">Cadastrar</button>
                         </form>
                         <hr>
                         <div class="text-center">

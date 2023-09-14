@@ -1,35 +1,59 @@
 <div th:replace="shared/header"></div>
 <!-- Begin Page Content -->
-<div class="container-fluid">
+<div class="container-fluid full-height-index">
 
-    <div class="px-4 py-5 my-5 text-center">
-        <br>
-        <br>
-        <br>
-
+    <div class="px-4">
 
         <div th:switch="${currentUser != null}">
             <div th:case="true">
-                <div class="col-lg-6 mx-auto">
-                    <p class="lead mb-4">Tire suas dúvidas com nossos técnicos.</p>
-                    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                        <a type="button" class="btn btn-primary btn-lg px-4 gap-3" th:href="@{/realizar-call}">Realizar
-                            uma chamada</a>
-
+                    <div th:if="${currentUser.role.name == 'CONSUMER'}">
+                        <div class="py-5 my-5 text-center">
+                            <div class="col-lg-6 mx-auto">
+                                <br>
+                                <br>
+                                <br>
+                                <p class="lead mb-4">Tire suas dúvidas com nossos técnicos.</p>
+                                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                                    <a type="button" class="btn btn-primary btn-lg px-4 gap-3" th:href="@{/realizar-call}">Realizar
+                                        uma chamada</a>
+                                </div>
+                            </div>
+                        </div>    
                     </div>
-                </div>
-            </div>
+                    <div th:if="${currentUser.role.name == 'AGENT'}">
+                        <div class="py-5">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="card shadow-sm pb-5 px-2 pt-2">
+                                        <div class="d-flex justify-content-between">
+                                            <h6>Teste</h6>
+                                            <span> AAAAAA </span>
+                                        </div>
+                                        <p class="text-left">
+                                            Olá.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+            </div>    
             <div th:case="false">
-                <h1 class="display-5 fw-bold text-body-emphasis">Bem-vindo!</h1>
-                <div class="col-lg-6 mx-auto">
-                    <p class="lead mb-4">Tire suas dúvidas com nossos técnicos.</p>
-                    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                        <a type="button" class="btn btn-primary btn-lg px-4 gap-3" th:href="@{/login}">Login</a>
-                        <p>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</p>
-                        <a type="button" class="btn btn-outline-secondary btn-lg px-4"
-                           th:href="@{/register}">Registre-se</a>
+                <div class="py-5 my-5 text-center">
+                    <br>
+                    <br>
+                    <br>
+                    <h1 class="display-5 fw-bold text-body-emphasis">Bem-vindo!</h1>
+                    <div class="col-lg-6 mx-auto">
+                        <p class="lead mb-4">Tire suas dúvidas com nossos técnicos.</p>
+                        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                            <a type="button" class="btn btn-primary btn-lg px-4 gap-3" th:href="@{/login}">Login</a>
+                            <p>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</p>
+                            <a type="button" class="btn btn-outline-secondary btn-lg px-4"
+                            th:href="@{/register}">Registre-se</a>
+                        </div>
                     </div>
-                </div>
+                </div>    
             </div>
         </div>
     </div>

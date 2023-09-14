@@ -32,6 +32,10 @@
     height: 100vh;
 }
 
+.full-height-index {
+    height: 80vh;
+}
+
 .resize-none {
     resize: none;
 }
