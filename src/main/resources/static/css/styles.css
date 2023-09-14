@@ -1,0 +1,112 @@
+
+.nav-item-logout:hover {
+    color: #ff004f;
+
+}
+
+.meuCard {
+    width: 60.8125rem;
+    height: 44.1875rem;
+    border-radius: 1.25rem;
+    background: #FFF;
+    box-shadow: 0px 7px 8px 0px rgba(0, 0, 0, 0.25);
+
+}
+
+.text-normal {
+    color: #444444;
+}
+
+.bg-input-call {
+    border-radius: 0.3rem;
+    background: #F1F1F1;
+}
+
+.chat-container {
+    /*background: #ffffff;*/
+    height: 100vh;
+    overflow: hidden;
+}
+
+.full-height {
+    height: 100vh;
+}
+
+.resize-none {
+    resize: none;
+}
+
+textarea {
+    border: none;
+    overflow: auto;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.icon-send {
+    width: 0.875rem;
+    height: 0.87256rem;
+}
+
+.message-text {
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.message-title{
+    color: #c5c5c5;
+    font-size: .8rem;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+}
+
+.message-card {
+    border-radius: 0.500rem;
+    background: #ffffff;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.11);
+}
+
+.bg-another-user{
+    background: #DAEBF5;
+}
+
+.message-container{
+    height: 100vh;
+    overflow-y: scroll;
+    padding-bottom: 500px;
+}
+
+body::-webkit-scrollbar{
+    display: none;
+}
+
+
+.bg-message {
+    border-radius: 0.7rem;
+    box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.1);
+}
+
+.bg-me-message {
+    background-color: #2D3E4A;
+    color: #FFFFFF;
+}
+
+.bg-him-message {
+    background-color: #ffffff;
+    color: #333333;
+}
+
+.sending-time-me{
+    color: #E2E2E2;
+    font-size: .9rem;
+}
+
+.sending-time-him{
+    color: #616161;
+    font-size: .9rem;
+}

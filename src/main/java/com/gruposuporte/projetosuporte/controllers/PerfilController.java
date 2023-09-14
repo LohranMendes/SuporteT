@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class PerfilController {
     @GetMapping("/perfil")
     public String perfil(){
-        return "perfil";
+        return "profile";
     }
 
 }

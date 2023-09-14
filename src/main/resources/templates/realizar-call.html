@@ -1,0 +1,47 @@
+<div th:replace="shared/header"></div>
+<div class="container-fluid vh-100 mt-5">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-title font-weight-bold text-normal"><strong>Iniciando um chamado</strong></h6>
+                    <form method="post" th:action="@{/create-call}" th:object="${call}">
+                        <div class="form-group">
+                            <label for="problem-title" class="text-normal font-weight-normal mb-0">Título do
+                                problema</label>
+                            <input
+                                    type="text"
+                                    class="form-control form-control-sm bg-input-call"
+                                    id="problem-title"
+                                    placeholder="Digite o título do problema"
+                                    th:field="*{title}"
+                            />
+                            <span class="text-danger small text fw-normal text-right"
+                                  th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="problem-description" class="text-normal font-weight-normal mb-0"> Descrição do
+                                problema</label>
+                            <textarea
+                                    class="form-control form-control-sm bg-input-call"
+                                    id="problem-description"
+                                    rows="5"
+                                    th:field="*{description}"
+                                    placeholder="Por favor, explique o problema que está enfrentando de maneira clara e, se possível, forneça exemplos para ilustrar a situação."
+                            ></textarea>
+                            <span class="text-danger small text fw-normal text-right"
+                                  th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary text-uppercase rounded-pill">
+                                <small>FAZER CHAMAMADO</small>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="shared/footer"></div>

@@ -1,17 +1,31 @@
 package com.gruposuporte.projetosuporte.controllers;
 
+import com.gruposuporte.projetosuporte.repository.UserRepository;
+import com.gruposuporte.projetosuporte.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 @Controller
-//@RequestMapping("/")
 public class HomeController {
 
+    private final UserRepository userRepository;
+    private final UserUtils userUtils;
+
+
+    @Autowired
+    public HomeController(UserRepository userRepository, UserUtils userUtils) {
+        this.userRepository = userRepository;
+        this.userUtils = userUtils;
+    }
+
+
     @GetMapping("/")
-    public String home(){
-        return "home";
+    public String index(Model model){
+        var user = userUtils.getCurrentUser();
+        model.addAttribute("currentUser", user);
+        return "index";
     }
 
 }

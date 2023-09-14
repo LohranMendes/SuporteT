@@ -4,6 +4,7 @@ import com.gruposuporte.projetosuporte.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -59,22 +60,28 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers(mvc.pattern("/"), mvc.pattern("/css/**"), mvc.pattern("/js/**"), mvc.pattern("/register"), mvc.pattern("/login"), mvc.pattern("/home"), mvc.pattern("/register-user")).permitAll().anyRequest().authenticated();
+                    auth.requestMatchers(
+                                    mvc.pattern(HttpMethod.GET, "/"),
+                                    mvc.pattern(HttpMethod.GET, "/css/**"),
+                                    mvc.pattern(HttpMethod.GET, "/img/**"),
+                                    mvc.pattern(HttpMethod.GET, "/scss/**"),
+                                    mvc.pattern(HttpMethod.GET, "/vendor/**"),
+                                    mvc.pattern(HttpMethod.GET, "/js/**"),
+                                    mvc.pattern(HttpMethod.GET, "/register"),
+                                    mvc.pattern(HttpMethod.GET, "/login"),
+                                    mvc.pattern(HttpMethod.GET, "/home"),
+                                    mvc.pattern(HttpMethod.POST, "/register-user"),
+                                    mvc.pattern(HttpMethod.GET, "/register-agent"),
+                                    mvc.pattern(HttpMethod.POST, "/register-agent")
+                            ).permitAll()
+                            .anyRequest()
+                            .authenticated();
                 }).formLogin(form -> {
-                    form.loginPage("/login").permitAll();
+                    form.loginPage("/login")
+                            .defaultSuccessUrl("/", true)
+                            .permitAll();
                 });
-
-
-//        http.csrf(AbstractHttpConfigurer::disable)
-//                .authorizeHttpRequests(auth ->
-//                        auth.requestMatchers("/", "/css/**", "/js/**", "/register", "/login", "/home").permitAll()
-//                                .anyRequest().authenticated()
-//                ).formLogin(form -> {
-//                    form.loginPage("/login").permitAll();
-//                });
-
         return http.build();
     }
-
 
 }
