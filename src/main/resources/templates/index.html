@@ -20,23 +20,28 @@
                             </div>
                         </div>    
                     </div>
+
                     <div th:if="${currentUser.role.name == 'AGENT'}">
+                        <div class="d-flex">
+                            <div class="mr-2 rounded-pill bg-primary">  </div>
+                            <h5 class="font-weight-bolder text-grey-808 pb-0 mb-0">Chamados</h5>
+                        </div>
                         <div class="py-5">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-4" th:each="call:${calls}">
                                     <div class="card shadow-sm pb-5 px-2 pt-2">
                                         <div class="d-flex justify-content-between">
-                                            <h6>Teste</h6>
-                                            <span> AAAAAA </span>
+                                            <h6 th:text="${call.title}"></h6>
+                                            <span th:text="${call.status}?Aberto:Fechado"></span>
                                         </div>
-                                        <p class="text-left">
-                                            Olá.
+                                        <p class="text-left"th:text="${call.description}">
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>   
+                    </div>
+
             </div>    
             <div th:case="false">
                 <div class="py-5 my-5 text-center">

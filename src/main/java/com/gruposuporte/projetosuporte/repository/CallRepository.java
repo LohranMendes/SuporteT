@@ -8,7 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface CallRepository extends JpaRepository<Call, UUID> {
-
 //    List<Message> getAllBy(UUID id);
 
 }

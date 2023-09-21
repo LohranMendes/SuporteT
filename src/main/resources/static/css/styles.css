@@ -114,3 +114,18 @@ body::-webkit-scrollbar{
     color: #616161;
     font-size: .9rem;
 }
+.h-5{
+    height: 1.25rem;
+}
+.w-1{
+    width: 0.25rem;
+}
+.w-4{
+    width: 1rem;
+}
+.min-vh-30{
+    min-height: 30vh !important;
+}
+.min-vh-45{
+    min-height: 45vh !important;
+}
