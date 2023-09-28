@@ -25,10 +25,10 @@
                             <p class="card-text"><small class="text-muted" th:text="${createdDate}"></small></p>
                             <div class="d-flex justify-content-end">
                                 <button type="button" class="btn btn-outline-secondary rounded-pill mr-4"
-                                        onclick="hideDescription()"><small>OCULTAR
-                                    DESCRIÇÃO</small></button>
-                                <button type="button" class="btn btn-outline-danger rounded-pill"><small>FECHAR
-                                    CHAMDO</small></button>
+                                        onclick="hideDescription()"><small>OCULTAR DESCRIÇÃO</small></button>
+                                <form method="post"th:action="@{'/closeCall/'+${currentCall.id}}">
+                                    <button th:if="${currentUser.role.name.equals('AGENT')} " type="submit" class="btn btn-outline-danger rounded-pill"><small>FECHAR CHAMADO</small></button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -63,9 +63,9 @@
         </div>
 
 
-    <div class="fixed-bottom bg-white shadow-sm pt-4 pb-4 px-4 border-top">
-        <div class="d-flex flex-column">
-            <form id="formChat" name="formChat">
+        <div class="fixed-bottom bg-white shadow-sm pt-4 pb-4 px-4 border-top">
+            <div class="d-flex flex-column">
+                <form id="formChat" name="formChat">
             <textarea
                     class="resize-none bg-transparent border-0 w-100 mb-2"
                     id="prompt-textarea"
@@ -74,23 +74,23 @@
                     spellcheck="false"
                     placeholder="Escreva sua mensagem..."
             ></textarea>
-                <div class="d-flex justify-content-end">
-                    <button class="text-uppercase btn btn-primary rounded-pill" id="sendMessage">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14"
-                             fill="none"
-                             class="icon-send">
-                            <path d="M6.36906 0.367211L0.0739916 12.8874C-0.205789 13.5169 0.353772 14.2164 0.983279 13.9366L5.6696 12.1879L6.99856 4.2142L8.32752 12.1879L13.0138 13.9366C13.6434 14.1464 14.2029 13.5169 13.8532 12.8874L7.55812 0.367211C7.34829 -0.122405 6.64884 -0.122405 6.36906 0.367211Z"
-                                  fill="white"/>
-                        </svg>
-                        <small>Enviar</small>
-                    </button>
-                </div>
+                    <div class="d-flex justify-content-end">
+                        <button class="text-uppercase btn btn-primary rounded-pill" id="sendMessage">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14"
+                                 fill="none"
+                                 class="icon-send">
+                                <path d="M6.36906 0.367211L0.0739916 12.8874C-0.205789 13.5169 0.353772 14.2164 0.983279 13.9366L5.6696 12.1879L6.99856 4.2142L8.32752 12.1879L13.0138 13.9366C13.6434 14.1464 14.2029 13.5169 13.8532 12.8874L7.55812 0.367211C7.34829 -0.122405 6.64884 -0.122405 6.36906 0.367211Z"
+                                      fill="white"/>
+                            </svg>
+                            <small>Enviar</small>
+                        </button>
+                    </div>
 
-            </form>
+                </form>
+            </div>
+
         </div>
-
     </div>
-</div>
 </div>
 
 <script th:inline="javascript">

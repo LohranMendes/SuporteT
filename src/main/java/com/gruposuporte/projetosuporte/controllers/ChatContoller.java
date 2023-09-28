@@ -58,28 +58,6 @@ public class ChatContoller {
         User realUser = user.get();
         Call realCall = call.get();
 
-
-        System.out.println("ChatContoller.sendMessage realCall " + realCall.getAgents());
-
-//        if (realUser.getRole() == UserRole.AGENT){
-////           if (realCall.getAgent().isEmpty() || realCall.getAgent().stream().filter(c -> !c.getRole().equals(realUser.getRole())).toList().isEmpty()){
-//           if (realCall.getAgent().isEmpty()){
-//               System.out.println("ChatContoller.sendMessage usurario "+realCall.getAgent());
-//           }
-//        }
-
-//        if (realUser.getRole() == UserRole.AGENT) {
-//            boolean agentExists = realCall.getAgents().stream()
-//                    .anyMatch(existingAgent -> existingAgent.getId().equals(realUser.getId()));
-//            if (!agentExists) {
-//                realCall.getAgents().add(realUser);
-//                System.out.println("ChatContoller.sendMessage added agent");
-//            }else {
-//                System.out.println("ChatContoller.sendMessage alread agent");
-//            }
-//        }
-
-
         var message = new Message(chatMessage.content(), chatMessage.date(), user.get(), call.get());
         messageRepository.save(message);
 

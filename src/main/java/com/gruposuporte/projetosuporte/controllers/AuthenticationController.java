@@ -7,6 +7,7 @@ import com.gruposuporte.projetosuporte.dto.LoginRequest;
 import com.gruposuporte.projetosuporte.dto.SignupRequest;
 import com.gruposuporte.projetosuporte.repository.UserRepository;
 import com.gruposuporte.projetosuporte.services.SecurityService;
+import com.gruposuporte.projetosuporte.utils.UserUtils;
 import com.gruposuporte.projetosuporte.utils.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,20 +26,24 @@ public class AuthenticationController {
 
     private final UserValidator userValidator;
 
+    private final UserUtils userUtils;
+
     private SecurityService securityService;
 
     @Autowired
-    public AuthenticationController(UserRepository userRepository, UserValidator userValidator, PasswordEncoder encoder, SecurityService securityService) {
+    public AuthenticationController(UserRepository userRepository, UserValidator userValidator, PasswordEncoder encoder, SecurityService securityService, UserUtils userUtils) {
         this.userRepository = userRepository;
         this.encoder = encoder;
         this.securityService = securityService;
         this.userValidator = userValidator;
+        this.userUtils = userUtils;
     }
 
     @GetMapping("/register")
     public String register(@ModelAttribute("user") SignupRequest signupRequest) {
-        if (securityService.isAuthenticated()) {
-            return "redirect:/";
+        var user = userUtils.getCurrentUser();
+        if (securityService.isAuthenticated() && user != null) {
+                return "redirect:/";
         }
         return "register-user";
     }

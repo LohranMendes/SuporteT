@@ -25,6 +25,9 @@ public class CreateCallValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         CallRequest callRequest = (CallRequest) target;
+//        if(callRequest.multipartFile()!= null && callRequest.multipartFile().isEmpty() && callRequest.multipartFile().getOriginalFilename() != null){
+//            errors.rejectValue("file", "NotEmpty.callForm.title");
+//        }
 
         if (StringUtils.isEmptyOrWhitespace(callRequest.title())) {
             errors.rejectValue("title", "NotEmpty.callForm.title");

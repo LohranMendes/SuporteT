@@ -35,7 +35,7 @@ public class UserUtils {
     }
 
 
-    public String getFormattedDate(Date creationDate) {
+    public static String getFormattedDate(Date creationDate) {
         Date currentDate = new Date();
 
         long timeDifferenceInMillis = currentDate.getTime() - creationDate.getTime();

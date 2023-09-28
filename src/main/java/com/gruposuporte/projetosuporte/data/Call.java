@@ -20,7 +20,10 @@ public class Call {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+
     private Date data;
+
+    private String image;
 
     @Column(length = 300)
     private String title;
@@ -32,22 +35,19 @@ public class Call {
 
     @ManyToOne
     @JoinColumn(name = "costumerId")
-    private User costumer;
+    private User consumer;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "call_agent",
-            joinColumns = @JoinColumn(name = "call_id"),
-            inverseJoinColumns = @JoinColumn(name = "agent_id")
-    )
-    private List<User> agents;
 
-    public Call(Date data, String title, boolean status, String description, User costumer) {
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="agenteId")
+    private User agent;
+
+    public Call(Date data, String title, boolean status, String description, User consumer) {
         this.data = data;
         this.title = title;
         this.status = status;
         this.description = description;
-        this.costumer = costumer;
+        this.consumer = consumer;
 //        this.agents = new ArrayList<>();
     }
 }
