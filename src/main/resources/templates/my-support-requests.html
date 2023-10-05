@@ -1,4 +1,5 @@
 <div th:replace="shared/header"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css" integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
 <div>
     <div class="p-5">
         <div class="d-flex justify-content-between align-items-center">
@@ -38,9 +39,17 @@
                     <div class="card card-shadow px-4 pt-4 pb-0 min-vh-30 max-vh-30 d-flex flex-column">
                         <div class="d-flex justify-content-between">
                             <h6 class="card-title support-title" th:text="${call.title}"></h6>
-                            <div class="bg-support-status h-100"  th:classappend="${call.status}?'bg-support-status-open':'bg-support-status-closed'">
+                            <div class="d-flex">
+                                <div class="bg-support-status h-100"
+                                     th:classappend="${call.status}?'bg-support-status-open':'bg-support-status-closed'">
                                 <span class="fs-6 text-support-status"
                                       th:text="${call.status} ? 'ABERTO':'FECHADO'"></span>
+                                </div>
+                                    <form th:if="${currentUser.role.name == 'CONSUMER'}" th:action="@{'/delete-call/'+${call.id}}" th:method="post">
+                                        <button type="submit" class=" ml-4 btn btn-outline-danger">
+                                            <i class="fas fa-trash-alt fa-spin"></i>
+                                        </button>
+                                    </form>
                             </div>
                         </div>
                         <div class="min-5">
@@ -54,10 +63,6 @@
                 </a>
             </div>
         </div>
-
-
-        <!--        <div class="row mt-4" id="supports">-->
-        <!--        </div>-->
 
     </div>
     <script>
@@ -74,6 +79,7 @@
                 dropdownContent.style.display = "none";
             });
         });
+
     </script>
     <div th:replace="shared/footer"></div>
 </div>

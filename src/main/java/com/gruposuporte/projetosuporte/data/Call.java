@@ -1,6 +1,7 @@
 package com.gruposuporte.projetosuporte.data;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -49,5 +50,12 @@ public class Call {
         this.description = description;
         this.consumer = consumer;
 //        this.agents = new ArrayList<>();
+    }
+    @Transient
+    public String getImagePath(){
+        if(image==null || id==null){
+            return null;
+        }
+        return "/uploads/"+consumer.getId()+"/"+image;
     }
 }

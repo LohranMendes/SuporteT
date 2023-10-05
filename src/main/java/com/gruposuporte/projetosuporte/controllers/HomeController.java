@@ -28,7 +28,8 @@ public class HomeController {
     @GetMapping("/")
     public String index(Model model){
         var user = userUtils.getCurrentUser();
-        var calls = callRepository.findAll(Sort.by(Sort.Direction.DESC,"data"));
+        var calls = callRepository.findAll(Sort.by(Sort.Direction.DESC,"data"))
+                .stream().filter(c->c.getAgent() == null ||!c.isStatus()).toList();
         model.addAttribute("currentUser", user);
         model.addAttribute("calls", calls);
         return "index";

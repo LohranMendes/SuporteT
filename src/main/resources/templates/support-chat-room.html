@@ -19,15 +19,32 @@
                             DESCRIÇÃO</small></button>
                     </div>
                     <div id="content-description">
-                        <p class="card-title font-weight-normal" id="description"
-                           th:text="${currentCall.description}"></p>
+                        <div class="d-flex">
+                            <img
+                                    th:src="@{${currentCall.imagePath}}"
+                                    id="image"
+                                    class="image"
+                                    onclick="openModal()"
+                                    style="max-width: 300px; max-height: 200px; cursor: pointer;"
+                                    alt="Imagem do chamado"
+                            />
+
+                            <div class="ml-4">
+                                <h6 class="font-weight-bolder">Descrição</h6>
+                                <p class="card-title font-weight-normal" id="description"
+                                   th:text="${currentCall.description}"></p>
+                            </div>
+
+                        </div>
                         <div class="d-flex justify-content-between">
                             <p class="card-text"><small class="text-muted" th:text="${createdDate}"></small></p>
                             <div class="d-flex justify-content-end">
                                 <button type="button" class="btn btn-outline-secondary rounded-pill mr-4"
                                         onclick="hideDescription()"><small>OCULTAR DESCRIÇÃO</small></button>
-                                <form method="post"th:action="@{'/closeCall/'+${currentCall.id}}">
-                                    <button th:if="${currentUser.role.name.equals('AGENT')} " type="submit" class="btn btn-outline-danger rounded-pill"><small>FECHAR CHAMADO</small></button>
+                                <form method="post" th:action="@{'/closeCall/'+${currentCall.id}}">
+                                    <button th:if="${currentUser.role.name.equals('AGENT')} " type="submit"
+                                            class="btn btn-outline-danger rounded-pill"><small>FECHAR CHAMADO</small>
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -55,7 +72,8 @@
                         </p>
                         <p class="card-text message-text" th:text="${message.text}"></p>
                     </div>
-                    <div class="text-right mb-2 pb-0 mx-4" th:classappend="${message.user.id == currentUser.id} ? 'sending-time-me' : 'sending-time-him'">
+                    <div class="text-right mb-2 pb-0 mx-4"
+                         th:classappend="${message.user.id == currentUser.id} ? 'sending-time-me' : 'sending-time-him'">
                         <small th:text="${userUtils.getFormattedMessageDate(message.datetime)}"></small>
                     </div>
                 </div>
@@ -63,7 +81,7 @@
         </div>
 
 
-        <div class="fixed-bottom bg-white shadow-sm pt-4 pb-4 px-4 border-top">
+        <div class="fixed-bottom bg-white shadow-sm pt-4 pb-4 px-4 border-top" id="chatcontainer">
             <div class="d-flex flex-column">
                 <form id="formChat" name="formChat">
             <textarea
@@ -93,11 +111,45 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div id="myModal" class="modal-chat">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <div class="modal-dialog-chat" role="document">
+        <div class="modal-body-chat">
+
+            <img
+                    class="modal-content-chat img-fluid"
+                    th:src="@{${currentCall.imagePath}}"
+                    alt="Imagem do chamado"
+            />
+        </div>
+    </div>
+</div>
+
 <script th:inline="javascript">
     let currentUserName = /*[[${currentUser.name}]]*/ ''
     let tickerId = /*[[${currentCall.id}]]*/ ''
     let currentUserId = /*[[${currentUser.id}]]*/ ''
     let currentUserRole = /*[[${currentUser.role.name}]]*/ ''
+
+
+    function openModal() {
+        const modal = document.getElementById("myModal");
+        modal.style.display = "block";
+    }
+
+    // Função para fechar o modal
+    function closeModal() {
+        const modal = document.getElementById("myModal");
+        modal.style.display = "none";
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const image = document.getElementById("image");
+        if (image) {
+            image.addEventListener("click", openModal);
+        }
+    });
 </script>
 
 

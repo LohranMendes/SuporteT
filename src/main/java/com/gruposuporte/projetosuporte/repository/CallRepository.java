@@ -20,4 +20,8 @@ public interface CallRepository extends JpaRepository<Call, UUID> {
     List<Call> findAllByConsumerOrderByDataAsc(User user);
 
     List<Call> findAllByConsumerOrderByDataDesc(User user);
+    List<Call> findAllByAgentOrderByDataAsc(User user);
+    List<Call> findAllByAgentOrderByDataDesc(User user);
+
+
 }

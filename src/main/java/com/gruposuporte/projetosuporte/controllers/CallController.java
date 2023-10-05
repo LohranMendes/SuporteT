@@ -3,11 +3,13 @@ package com.gruposuporte.projetosuporte.controllers;
 import com.gruposuporte.projetosuporte.data.Call;
 import com.gruposuporte.projetosuporte.data.Message;
 import com.gruposuporte.projetosuporte.data.UserRole;
+import com.gruposuporte.projetosuporte.dto.CallAgent;
 import com.gruposuporte.projetosuporte.dto.CallRequest;
 import com.gruposuporte.projetosuporte.dto.ChatMessage;
 import com.gruposuporte.projetosuporte.repository.CallRepository;
 import com.gruposuporte.projetosuporte.repository.ChatMessageRepository;
 import com.gruposuporte.projetosuporte.repository.UserRepository;
+import com.gruposuporte.projetosuporte.services.CallService;
 import com.gruposuporte.projetosuporte.utils.CreateCallValidator;
 import com.gruposuporte.projetosuporte.utils.UserUtils;
 import jakarta.transaction.Transactional;
@@ -19,6 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,13 +33,11 @@ import java.net.URI;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 public class CallController {
+    private final CallService callService;
     private final UserRepository userRepository;
 
     private final CreateCallValidator callValidator;
@@ -51,12 +52,13 @@ public class CallController {
     private String uploadDir;
 
     @Autowired //instanciar a classe UserRepository
-    public CallController(UserRepository userRepository, ChatMessageRepository chatMessageRepository, CreateCallValidator callValidator, CallRepository callRepository, UserUtils userUtils) {
+    public CallController(UserRepository userRepository, ChatMessageRepository chatMessageRepository, CreateCallValidator callValidator, CallRepository callRepository, UserUtils userUtils, CallService callService) {
         this.userRepository = userRepository;
         this.callValidator = callValidator;
         this.callRepository = callRepository;
         this.chatMessageRepository = chatMessageRepository;
         this.userUtils = userUtils;
+        this.callService = callService;
     }
 
     @GetMapping("/realizar-call")
@@ -72,7 +74,6 @@ public class CallController {
         var callOptional = callRepository.findById(callId);
         if (callOptional.isEmpty()) {
             return "redirect:/";
-//            return "redirect:/page-error-404";
         }
         var user = userUtils.getCurrentUser();
         var call = callOptional.get();
@@ -98,13 +99,17 @@ public class CallController {
     @GetMapping("/my-support-requests")
     public String mySupportRequests(@RequestParam(name = "orderBy", defaultValue = "desc") String orderBy, Model model) {
         var user = userUtils.getCurrentUser();
-//        var calls = callRepository.findAll(Sort.by(orderBy.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC, "data"));
+        List<Call> calls;
+        if (user.getRole().equals(UserRole.AGENT)) {
+            calls = orderBy.equalsIgnoreCase("asc") ? callRepository.findAllByAgentOrderByDataAsc(user) : callRepository.findAllByAgentOrderByDataDesc(user);
+        } else {
+            calls = orderBy.equalsIgnoreCase("asc") ? callRepository.findAllByConsumerOrderByDataAsc(user) : callRepository.findAllByConsumerOrderByDataDesc(user);
 
-        var calls = orderBy.equalsIgnoreCase("asc") ? callRepository.findAllByConsumerOrderByDataAsc(user) : callRepository.findAllByConsumerOrderByDataDesc(user);
-
+        }
         model.addAttribute("currentUser", user);
         model.addAttribute("calls", calls);
         model.addAttribute("order", orderBy);
+
         return "my-support-requests";
     }
 
@@ -122,26 +127,11 @@ public class CallController {
         }
 
         var call = new Call(new Date(), callRequest.title(), true, callRequest.description(), user);
-        if (!callRequest.multipartFile().isEmpty()) {
-            try {
-                String uploadDir = this.uploadDir + call.getConsumer().getUsername() + "/";
-                File uploadPath = new File(uploadDir);
-                if (!uploadPath.exists()) {
-                    uploadPath.mkdirs();//cria diretorios
-                }
-                String fileName = callRequest.multipartFile().getOriginalFilename();
-                if (fileName != null) {
-                    String filePath = uploadDir + "/" + new SimpleDateFormat("YYYYMMdd_HHmmss_SSS", Locale.US).format(new Date()) + fileName.substring(fileName.lastIndexOf("."));
-                    File destFile = new File(filePath);
-                    if (!destFile.exists()) {
-                        destFile.mkdirs();
-                    }
-                    callRequest.multipartFile().transferTo(destFile);
-                    call.setImage("/uploads/" + user.getUsername() + "/" + destFile.getName());
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        var file = callRequest.multipartFile();
+        if (!file.isEmpty() && file.getOriginalFilename() != null) {
+            callService.saveImageCall(user.getId().toString(), file);
+            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+            call.setImage(fileName);
         }
 
         callRepository.save(call);
@@ -162,4 +152,36 @@ public class CallController {
         return "/login";
     }
 
+    @PostMapping("/ligar/{callId}/{agentId}")
+    public String ligar(@PathVariable("callId") UUID callId, @PathVariable("agentId") UUID agentId) {
+        var callOptional = callRepository.findById(callId);
+        var agent = userRepository.findById(agentId);
+        if (!callOptional.isPresent() || !agent.isPresent()) {
+            return "redirect:/";
+        }
+        if (agent.get().getRole() != UserRole.AGENT) {
+            return "redirect:/";
+        }
+
+        if (callOptional.get().getAgent() != null) {
+            return "redirect:/";
+        }
+        var call = callOptional.get();
+        call.setAgent(agent.get());
+        callRepository.save(call);
+        return "redirect:/support-chat/" + call.getId();
+    }
+    @PostMapping("/delete-call/{callId}")
+    public String deleteCall(@PathVariable("callId") UUID callId){
+        var callOptional = callRepository.findById(callId);
+        var user = userUtils.getCurrentUser();
+        if (!callOptional.isPresent()) {
+            return "redirect:/";
+        }
+        if (user.getRole() != UserRole.CONSUMER) {
+            return "redirect:/";
+        }
+        callRepository.delete(callOptional.get());
+        return "redirect:/my-support-requests";
+    }
 }

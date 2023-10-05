@@ -29,23 +29,52 @@
 
                         <div class="py-2">
                             <div class="row mt-4 ">
-                                <div class="col-md-4 mb-4" th:each="call:${calls}">
-                                   <a th:href="@{'/support-chat/'+${call.id}}" class="support-a">
-                                       <div class="card card-shadow px-4 pt-4 pb-0 min-vh-30 d-flex flex-column">
-                                           <div class="d-flex justify-content-between">
-                                               <h6 class="card-title support-title" th:text="${call.title}"></h6>
-                                               <div class="bg-support-status h-100 "th:classappend="${call.status}?'bg-support-status-open':'bg-support-status-closed'">
-                                                   <span class="fs-6 text-support-status" th:text="${call.status}?Aberto:Fechado"></span>
-                                               </div>
-                                           </div>
-                                           <div class="min-5">
-                                               <p class="text-left limit-line-support-description"th:text="${call.description}"></p>
-                                           </div>
-                                           <div class="d-flex align-items justify-content-end">
-                                               <p th:text="${T(com.gruposuporte.projetosuporte.utils.UserUtils).getFormattedDate(call.data)}"> </p>
-                                           </div>
-                                       </div>
-                                   </a>
+                                <div class="col-md-4 mb-4"  th:each="call:${calls}">
+<!--                                   <a th:href="@{'/support-chat/'+${call.id}}" class="support-a"  data-toggle="modal" data-target="#exampleModalCenter">-->
+
+                                        <div th:id="${call}" class="card card-shadow px-4 pt-4 pb-0 min-vh-30 d-flex flex-column"data-toggle="modal" data-target="#exampleModalCenter">
+                                        <div class="d-flex justify-content-between">
+                                            <h6 class="card-title support-title" th:text="${call.title}"></h6>
+                                            <div class="bg-support-status h-100 "th:classappend="${call.status}?'bg-support-status-open':'bg-support-status-closed'">
+                                                <span class="fs-6 text-support-status" th:text="${call.status}?Aberto:Fechado"></span>
+                                            </div>
+                                        </div>
+                                        <div class="min-5">
+                                            <p class="text-left limit-line-support-description"th:text="${call.description}"></p>
+                                        </div>
+                                        <div class="d-flex align-items justify-content-end">
+                                            <p th:text="${T(com.gruposuporte.projetosuporte.utils.UserUtils).getFormattedDate(call.data)}"> </p>
+                                        </div>
+                                    </div>
+<!--                                   </a>-->
+                                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLongTitle">Atender Chamada</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>
+                                                        Você gostaria de atender a chamada "<span th:text="${call.title}"></span>" ?
+                                                    </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+<!--                                                    <form th:action="${/ligar}"method="post" th:object="${callAgent}">-->
+                                                    <form th:action="@{'/ligar/'+${call.id}+'/'+${currentUser.id}}" method="post">
+                                                        <button type="submit" class="btn btn-primary">
+<!--                                                            <input type="hidden" name="campoInvisivel" value="valorDoCampoInvisivel">-->
+                                                            Abrir chamada
+                                                        </button>
+                                                    </form>
+<!--                                                        <a th:href="@{'/support-chat/'+${call.id}}" class="support-a btn btn-primary text-white">Abrir esta porra</a>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -72,4 +101,6 @@
         </div>
     </div>
 </div>
+
+
 <div th:replace="shared/footer"></div>

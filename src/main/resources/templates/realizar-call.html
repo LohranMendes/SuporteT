@@ -8,17 +8,17 @@
                     <form enctype="multipart/form-data" method="post" th:action="@{/create-call}" th:object="${call}">
                         <div class="form-group">
                             <label for="problem-title" class="text-normal font-weight-normal mb-0">Título do problema</label>
-                            <input
-                                    type="text"
-                                    class="form-control form-control-sm bg-input-call"
-                                    id="problem-title"
-                                    placeholder="Digite o título do problema"
-                                    th:field="*{title}"
+                            [[${error_message}]]
+                            <input type="text" class="form-control form-control-sm bg-input-call" id="problem-title"
+                                   placeholder="Digite o título do problema"
+                                   th:field="*{title}"
                             />
-                            <span class="text-danger small text fw-normal text-right" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+                            <span class="text-danger small text fw-normal text-right"
+                                  th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
                         </div>
                         <div class="form-group">
-                            <label for="problem-description" class="text-normal font-weight-normal mb-0"> Descrição do problema</label>
+                            <label for="problem-description" class="text-normal font-weight-normal mb-0"> Descrição do
+                                problema</label>
                             <textarea
                                     class="form-control form-control-sm bg-input-call"
                                     id="problem-description"
@@ -31,8 +31,10 @@
                         </div>
                         <div class="form-group">
                             <label for="upload_image" class="text-normal font-weight-normal mb-0">Enviar Imagem</label>
-                            <input th:field="*{multipartFile}"  type="file" class="form-control-file" id="upload_image" name="multipartFile" accept="image/*" />
-                            <span class="text-danger small text fw-normal text-right" th:if="${#fields.hasErrors('multipartFile')}" th:errors="*{multipartFile}"></span>
+                            <input th:field="*{multipartFile}" type="file" class="form-control-file" id="upload_image"
+                                   name="multipartFile" accept="image/*"/>
+                            <span class="text-danger small text fw-normal text-right"
+                                  th:if="${#fields.hasErrors('multipartFile')}" th:errors="*{multipartFile}"></span>
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary text-uppercase rounded-pill">

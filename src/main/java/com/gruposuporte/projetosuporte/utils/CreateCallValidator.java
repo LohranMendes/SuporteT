@@ -4,18 +4,13 @@ import com.gruposuporte.projetosuporte.dto.CallRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
 
 @Component
 public class CreateCallValidator implements Validator {
 
-//    private final CallRepository callRepository;
-//
-//    @Autowired
-//    public CreateCallValidator(CallRepository callRepository) {
-//        this.callRepository = callRepository;
-//    }
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -25,10 +20,9 @@ public class CreateCallValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         CallRequest callRequest = (CallRequest) target;
-//        if(callRequest.multipartFile()!= null && callRequest.multipartFile().isEmpty() && callRequest.multipartFile().getOriginalFilename() != null){
-//            errors.rejectValue("file", "NotEmpty.callForm.title");
-//        }
-
+        if(callRequest.multipartFile()!=null && !isFileSizeValid(callRequest.multipartFile())){
+            errors.rejectValue("file","Size.callForm.image");
+        }
         if (StringUtils.isEmptyOrWhitespace(callRequest.title())) {
             errors.rejectValue("title", "NotEmpty.callForm.title");
         }
@@ -44,5 +38,12 @@ public class CreateCallValidator implements Validator {
             errors.rejectValue("title", "Size.callForm.title");
         }
 
+    }
+
+    private boolean isFileSizeValid(MultipartFile multipartFile) {
+        long maxSize = 1024*1024;
+        long fileSize = multipartFile.getSize();
+
+        return fileSize <= maxSize;
     }
 }
