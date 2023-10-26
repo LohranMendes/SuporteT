@@ -1,4 +1,5 @@
 <div th:replace="shared/header"></div>
+
 <div class="chat-container">
     <div class="message-container">
         <div class="mx-auto">
@@ -20,15 +21,16 @@
                     </div>
                     <div id="content-description">
                         <div class="d-flex">
-                            <img
-                                    th:src="@{${currentCall.imagePath}}"
-                                    id="image"
-                                    class="image"
-                                    onclick="openModal()"
-                                    style="max-width: 300px; max-height: 200px; cursor: pointer;"
-                                    alt="Imagem do chamado"
-                            />
-
+                            <div th:if="${currentCall.imagePath != null}" class="">
+                                <img
+                                        th:src="@{${currentCall.imagePath}}"
+                                        id="image"
+                                        class="image"
+                                        onclick="openModal()"
+                                        style="max-width: 300px; max-height: 200px; cursor: pointer;"
+                                        alt="Imagem do chamado"
+                                />
+                            </div>    
                             <div class="ml-4">
                                 <h6 class="font-weight-bolder">Descrição</h6>
                                 <p class="card-title font-weight-normal" id="description"
@@ -156,6 +158,8 @@
 <script src="/js/scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+
 
 </div>
 </div>

@@ -48,9 +48,6 @@ public class CallController {
 
     private final UserUtils userUtils;
 
-    @Value("${file.upload-dir}")
-    private String uploadDir;
-
     @Autowired //instanciar a classe UserRepository
     public CallController(UserRepository userRepository, ChatMessageRepository chatMessageRepository, CreateCallValidator callValidator, CallRepository callRepository, UserUtils userUtils, CallService callService) {
         this.userRepository = userRepository;
@@ -159,7 +156,7 @@ public class CallController {
         if (!callOptional.isPresent() || !agent.isPresent()) {
             return "redirect:/";
         }
-        if (agent.get().getRole() != UserRole.AGENT) {
+        if (agent.get().getRole() == UserRole.CONSUMER) {
             return "redirect:/";
         }
 
@@ -169,8 +166,15 @@ public class CallController {
         var call = callOptional.get();
         call.setAgent(agent.get());
         callRepository.save(call);
-        return "redirect:/support-chat/" + call.getId();
+
+        if(agent.get().getRole() == UserRole.MANAGER){
+            return "redirect:/";
+        }else{
+            return "redirect:/support-chat/" + call.getId();
+        }
     }
+
+    
     @PostMapping("/delete-call/{callId}")
     public String deleteCall(@PathVariable("callId") UUID callId){
         var callOptional = callRepository.findById(callId);

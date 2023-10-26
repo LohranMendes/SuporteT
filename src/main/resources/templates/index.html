@@ -21,7 +21,7 @@
                         </div>    
                     </div>
 
-                    <div th:if="${currentUser.role.name == 'AGENT'}">
+                    <div th:if="${currentUser.role.name == 'AGENT' || currentUser.role.name == 'MANAGER'}">
                         <div class="d-flex mt-5 ">
                             <div class="mr-2 rounded-pill bg-primary h-4 w-1 ">  </div>
                             <h5 class="font-weight-bolder text-grey-808 pb-0 mb-0 ">Chamados</h5>
@@ -32,7 +32,7 @@
                                 <div class="col-md-4 mb-4"  th:each="call:${calls}">
 <!--                                   <a th:href="@{'/support-chat/'+${call.id}}" class="support-a"  data-toggle="modal" data-target="#exampleModalCenter">-->
 
-                                        <div th:id="${call}" class="card card-shadow px-4 pt-4 pb-0 min-vh-30 d-flex flex-column"data-toggle="modal" data-target="#exampleModalCenter">
+                                        <div th:id="${call}" class="card card-shadow px-4 pt-4 pb-0 min-vh-30 d-flex flex-column"data-toggle="modal" th:data-target="'#modal-' + ${call.id}">
                                         <div class="d-flex justify-content-between">
                                             <h6 class="card-title support-title" th:text="${call.title}"></h6>
                                             <div class="bg-support-status h-100 "th:classappend="${call.status}?'bg-support-status-open':'bg-support-status-closed'">
@@ -45,32 +45,53 @@
                                         <div class="d-flex align-items justify-content-end">
                                             <p th:text="${T(com.gruposuporte.projetosuporte.utils.UserUtils).getFormattedDate(call.data)}"> </p>
                                         </div>
-                                    </div>
-<!--                                   </a>-->
-                                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLongTitle">Atender Chamada</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p>
-                                                        Você gostaria de atender a chamada "<span th:text="${call.title}"></span>" ?
-                                                    </p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-<!--                                                    <form th:action="${/ligar}"method="post" th:object="${callAgent}">-->
-                                                    <form th:action="@{'/ligar/'+${call.id}+'/'+${currentUser.id}}" method="post">
-                                                        <button type="submit" class="btn btn-primary">
-<!--                                                            <input type="hidden" name="campoInvisivel" value="valorDoCampoInvisivel">-->
-                                                            Abrir chamada
-                                                        </button>
-                                                    </form>
-<!--                                                        <a th:href="@{'/support-chat/'+${call.id}}" class="support-a btn btn-primary text-white">Abrir esta porra</a>-->
+                                        <div class="modal fade" th:id="'modal-' + ${call.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">                                        
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div th:if="${currentUser.role.name == 'AGENT'}">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLongTitle">Atender Chamada</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>
+                                                                Você gostaria de atender a chamada "<span th:text="${call.title}"></span>" ?
+                                                            </p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <!--                                                    <form th:action="${/ligar}"method="post" th:object="${callAgent}">-->
+                                                            <form th:action="@{'/ligar/'+${call.id}+'/'+${currentUser.id}}" method="post">
+                                                                <button type="submit" class="btn btn-primary">
+        <!--                                                            <input type="hidden" name="campoInvisivel" value="valorDoCampoInvisivel">-->
+                                                                    Abrir chamada
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div th:if="${currentUser.role.name == 'MANAGER'}">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLongTitle"><span style="color: black;"><b>Alocar técnico?</b></h5>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div th:each="tecnico:${tecnicos}" class="my-2">
+                                                                <form th:action="@{'/ligar/'+${call.id}+'/'+${tecnico.id}}" method="post"></form>
+                                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                        <p class="mb-0" style="color: black;" th:text = "${tecnico.name}"></p>
+                                                                        <button type="submit" class="btn-primary btn cb">Alocar</button>
+                                                                    </div>  
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <!--                                                    <form th:action="${/ligar}"method="post" th:object="${callAgent}">-->
+                                                            <form th:action="@{'/ligar/'+${call.id}+'/'+${currentUser.id}}" method="post">
+                                                            </form>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -101,6 +122,5 @@
         </div>
     </div>
 </div>
-
 
 <div th:replace="shared/footer"></div>
