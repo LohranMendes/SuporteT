@@ -173,8 +173,12 @@ public class CallController {
             return "redirect:/support-chat/" + call.getId();
         }
     }
+<<<<<<< HEAD
 
     
+=======
+    @Transactional
+>>>>>>> 5408ed2c62899f2a64e74e4248dc7f7e59230581
     @PostMapping("/delete-call/{callId}")
     public String deleteCall(@PathVariable("callId") UUID callId){
         var callOptional = callRepository.findById(callId);
@@ -185,6 +189,8 @@ public class CallController {
         if (user.getRole() != UserRole.CONSUMER) {
             return "redirect:/";
         }
+
+        chatMessageRepository.deleteAllByCall(callOptional.get());
         callRepository.delete(callOptional.get());
         return "redirect:/my-support-requests";
     }
