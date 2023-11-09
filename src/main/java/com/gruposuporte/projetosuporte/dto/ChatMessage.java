@@ -6,13 +6,13 @@ import java.util.UUID;
 public record ChatMessage(
         UUID userId,
         UUID callId,
+        UUID agentId,
         String sender,
+        String callTitle,
         String content,
         Date date
 ) {
 }
-
-
 //@Getter
 //@Setter
 //@AllArgsConstructor

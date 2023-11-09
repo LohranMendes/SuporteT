@@ -82,4 +82,10 @@
 
     </script>
     <div th:replace="shared/footer"></div>
+    <script th:inline="javascript">
+    let currentUserName = /*[[${currentUser.name}]]*/ ''
+    let currentUserId = /*[[${currentUser.id}]]*/ ''
+    let currentUserRole = /*[[${currentUser.role.name}]]*/ ''
+
+</script>
 </div>
