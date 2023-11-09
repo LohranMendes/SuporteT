@@ -32,7 +32,7 @@
                                 <div class="col-md-4 mb-4"  th:each="call:${calls}">
 <!--                                   <a th:href="@{'/support-chat/'+${call.id}}" class="support-a"  data-toggle="modal" data-target="#exampleModalCenter">-->
 
-                                        <div th:id="${call}" class="card card-shadow px-4 pt-4 pb-0 min-vh-30 d-flex flex-column"data-toggle="modal" th:data-target="'#modal-' + ${call.id}">
+                                        <div th:id="${call}" class="card card-shadow px-4 pt-4 pb-0 min-vh-30 d-flex flex-column border border-dark"data-toggle="modal" th:data-target="'#modal-' + ${call.id}">
                                         <div class="d-flex justify-content-between">
                                             <h6 class="card-title support-title" th:text="${call.title}"></h6>
                                             <div class="bg-support-status h-100 "th:classappend="${call.status}?'bg-support-status-open':'bg-support-status-closed'">
@@ -122,14 +122,17 @@
         </div>
     </div>
 </div>
-<div id="notification" class="notification">
+<div id="notification" class="notification shadow bg-primary">
     <div class="notification-header d-flex justify-content-between ">
-        <h3 id="notification-title" class="notification-title text-dark"></h3>
+        <h3 id="notification-title" class="notification-title text-light"></h3>
+       <button onclick="closeNotification()" class="close">
         <i class="fa fa-times notification-close"></i>
+       </button>
+        
     </div>
     <div class="notification-container">
         <div class="notification-content">
-            <p id="notification-text" class="notification-text"></p>
+            <p id="notification-text" class="notification-tex text-light"></p>
             <span class="notification-timer"></span>
         </div>
         <span class="notification-status"></span>

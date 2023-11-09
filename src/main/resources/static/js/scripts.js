@@ -64,7 +64,7 @@ function showNotification() {
 
     setTimeout(() => {
         closeNotification();
-    }, 5000); // Fecha a notificação após 5 segundos (ajuste o tempo conforme necessário)
+    }, 30000); // Fecha a notificação após 5 segundos (ajuste o tempo conforme necessário)
 }
 
 function closeNotification() {

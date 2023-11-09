@@ -53,12 +53,7 @@
                     </div>
                     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar..."
-                                   aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
                             </div>
                         </div>
                     </form>
@@ -67,149 +62,26 @@
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
-
+                    <div th:if="${currentUser.role.name == 'MANAGER'}">
+                        <li>
+                            <a class="nav-link text-dark mt-3" th:href="@{/csv-relatorio}">
+                                <i class="fas fa-file-csv"></i>
+                                <span>Relatório</span>
+                            </a>
+                        </li>
+                    </div>
                     <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                    <li class="nav-item dropdown no-arrow d-sm-none">
-                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-search fa-fw"></i>
-                        </a>
-                        <!-- Dropdown - Messages -->
-                        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                             aria-labelledby="searchDropdown">
-                            <form class="form-inline mr-auto w-100 navbar-search">
-                                <div class="input-group">
-                                    <input type="text" class="form-control bg-light border-0 small"
-                                           placeholder="Search for..." aria-label="Search"
-                                           aria-describedby="basic-addon2">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button">
-                                            <i class="fas fa-search fa-sm"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </li>
 
                     <!-- Nav Item - Alerts -->
                     <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-bell fa-fw"></i>
-                            <!-- Counter - Alerts -->
-                            <span class="badge badge-danger badge-counter">3+</span>
-                        </a>
-                        <!-- Dropdown - Alerts -->
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="alertsDropdown">
-                            <h6 class="dropdown-header">
-                                Notificações
-                            </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 12, 2019</div>
-                                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-success">
-                                        <i class="fas fa-donate text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 7, 2019</div>
-                                    $290.29 has been deposited into your account!
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-warning">
-                                        <i class="fas fa-exclamation-triangle text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 2, 2019</div>
-                                    Spending Alert: We've noticed unusually high spending for your account.
-                                </div>
-                            </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">Mostre todas as
-                                notificações</a>
-                        </div>
+                       
                     </li>
 
                     <!-- Nav Item - Messages -->
                     <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-envelope fa-fw"></i>
-                            <!-- Counter - Messages -->
-                            <span class="badge badge-danger badge-counter">7</span>
-                        </a>
+                        
                         <!-- Dropdown - Messages -->
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="messagesDropdown">
-                            <h6 class="dropdown-header">
-                                Mensagens
-                            </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                         alt="...">
-                                    <div class="status-indicator bg-success"></div>
-                                </div>
-                                <div class="font-weight-bold">
-                                    <div class="text-truncate"></div>
-                                    <div class="small text-gray-500"></div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                         alt="...">
-                                    <div class="status-indicator"></div>
-                                </div>
-                                <div>
-                                    <div class="text-truncate">I have the photos that you ordered last month, how
-                                        would you like them sent to you?
-                                    </div>
-                                    <div class="small text-gray-500">Jae Chun · 1d</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                         alt="...">
-                                    <div class="status-indicator bg-warning"></div>
-                                </div>
-                                <div>
-                                    <div class="text-truncate">Last month's report looks great, I am very happy with
-                                        the progress so far, keep up the good work!
-                                    </div>
-                                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                         alt="...">
-                                    <div class="status-indicator bg-success"></div>
-                                </div>
-                                <div>
-                                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                        told me that people say this to all dogs, even if they aren't good...
-                                    </div>
-                                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">Leia mais mensagens</a>
-                        </div>
+                        
                     </li>
 
                     <div class="topbar-divider d-none d-sm-block"></div>
@@ -232,30 +104,25 @@
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                              aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Perfil
-                            </a>
-                            <!--                            <a class="dropdown-item" href="#">-->
-                            <!--                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>-->
-                            <!--                                Configurações-->
-                            <!--                            </a>-->
-                            <a class="dropdown-item" th:href="@{/my-support-requests}"
-                               th:if="${currentUser != null}">
-                                <!--                                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>-->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 text-gray-400" width="16"
-                                     height="16" viewBox="0 0 16 16" fill="none">
-                                    <path d="M11.3332 10.6667H5.33317C4.96498 10.6667 4.6665 10.3682 4.6665 10V3.99999C4.6665 3.63181 4.96498 3.33333 5.33317 3.33333H11.3332M11.3332 10.6667H13.3332C13.7014 10.6667 13.9998 10.3682 13.9998 10V3.99999C13.9998 3.6318 13.7014 3.33333 13.3332 3.33333H11.3332M11.3332 10.6667V10M11.3332 3.33333V3.99999"
-                                          stroke="#D1D3E2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M8.66667 13.3333H2.66667C2.29848 13.3333 2 13.0349 2 12.6667V6.66667C2 6.29848 2.29848 6 2.66667 6H4.66667M8.66667 13.3333H10.6667C11.0349 13.3333 11.3333 13.0349 11.3333 12.6667V11M8.66667 13.3333V12.6667"
-                                          stroke="#D1D3E2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M11.3335 6.00099V5.99998" stroke="#D1D3E2" stroke-linecap="round"
-                                          stroke-linejoin="round"/>
-                                    <path d="M11.3335 8.001V8" stroke="#D1D3E2" stroke-linecap="round"
-                                          stroke-linejoin="round"/>
-                                </svg>
-                                Meus chamados
-                            </a>
+                            <div th:if="${currentUser.role.name != 'MANAGER'}">
+                                <a class="dropdown-item" th:href="@{/my-support-requests}"
+                                th:if="${currentUser != null}">
+                                    <!--                                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>-->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 text-gray-400" width="16"
+                                        height="16" viewBox="0 0 16 16" fill="none">
+                                        <path d="M11.3332 10.6667H5.33317C4.96498 10.6667 4.6665 10.3682 4.6665 10V3.99999C4.6665 3.63181 4.96498 3.33333 5.33317 3.33333H11.3332M11.3332 10.6667H13.3332C13.7014 10.6667 13.9998 10.3682 13.9998 10V3.99999C13.9998 3.6318 13.7014 3.33333 13.3332 3.33333H11.3332M11.3332 10.6667V10M11.3332 3.33333V3.99999"
+                                            stroke="#D1D3E2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M8.66667 13.3333H2.66667C2.29848 13.3333 2 13.0349 2 12.6667V6.66667C2 6.29848 2.29848 6 2.66667 6H4.66667M8.66667 13.3333H10.6667C11.0349 13.3333 11.3333 13.0349 11.3333 12.6667V11M8.66667 13.3333V12.6667"
+                                            stroke="#D1D3E2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M11.3335 6.00099V5.99998" stroke="#D1D3E2" stroke-linecap="round"
+                                            stroke-linejoin="round"/>
+                                        <path d="M11.3335 8.001V8" stroke="#D1D3E2" stroke-linecap="round"
+                                            stroke-linejoin="round"/>
+                                    </svg>
+                                    Meus chamados
+                                </a>
+                            </div>
+                            
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item nav-item-logout" th:href="@{/logout}">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
