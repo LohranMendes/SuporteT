@@ -122,5 +122,23 @@
         </div>
     </div>
 </div>
+<div id="notification" class="notification">
+    <div class="notification-header d-flex justify-content-between ">
+        <h3 id="notification-title" class="notification-title text-dark"></h3>
+        <i class="fa fa-times notification-close"></i>
+    </div>
+    <div class="notification-container">
+        <div class="notification-content">
+            <p id="notification-text" class="notification-text"></p>
+            <span class="notification-timer"></span>
+        </div>
+        <span class="notification-status"></span>
+    </div>
+</div>
+<script th:inline="javascript">
+    let currentUserName = /*[[${currentUser.name}]]*/ ''
+    let currentUserId = /*[[${currentUser.id}]]*/ ''
+    let currentUserRole = /*[[${currentUser.role.name}]]*/ ''
 
+</script>
 <div th:replace="shared/footer"></div>

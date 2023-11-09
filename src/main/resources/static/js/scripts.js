@@ -32,7 +32,19 @@ function connect() {
 
 function onConnected(frame) {
     stompClient.subscribe('/topic/allMessages', (message) => {
+        const isChatRoom = window.location.pathname.includes("support-chat");
+    if(isChatRoom){
         showMessage(JSON.parse(message.body));
+    }
+    else{
+        const notificationTitle = document.getElementById('notification-title')
+        const notificationText = document.getElementById('notification-text')
+        const json = JSON.parse(message.body);
+//        const isCurrentUser = json.userId === currentUserId
+        notificationTitle.innerText = json.callTitle;
+        notificationText.innerText = "O agente "+ json.sender + " respondeu sua chamada";
+        showNotification();
+    }
     });
 }
 
@@ -44,6 +56,30 @@ function showMessage(message) {
         messagesDiv.classList.add("d-block")
     }
     document.getElementById('messages').appendChild(createCard(message));
+}
+
+function showNotification() {
+    const notification = document.querySelector('.notification');
+    notification.style.transform = 'translateY(0)';
+
+    setTimeout(() => {
+        closeNotification();
+    }, 5000); // Fecha a notificação após 5 segundos (ajuste o tempo conforme necessário)
+}
+
+function closeNotification() {
+    const notification = document.querySelector('.notification');
+    notification.style.transform = 'translateY(200%)';
+}
+
+function mostrarAlertaPersonalizado() {
+  var modal = document.getElementById("modal");
+  modal.style.display = "block";
+}
+
+function fecharAlertaPersonalizado() {
+  var modal = document.getElementById("modal");
+  modal.style.display = "none";
 }
 
 
@@ -106,7 +142,9 @@ function sendMessage(event) {
 
     let chatMessage = {
         userId: currentUserId,
+        agentId: callAgentId,
         callId: tickerId,
+        callTitle: callTitle,
         sender: currentUserName,
         content: message,
         date: currentDate
@@ -146,7 +184,9 @@ window.onload = function () {
 
 (function () {
     const formChat = document.getElementById("formChat");
-    formChat.addEventListener('submit', sendMessage, true);
+    if(formChat){
+        formChat.addEventListener('submit', sendMessage, true);
+    }
 })();
 
 

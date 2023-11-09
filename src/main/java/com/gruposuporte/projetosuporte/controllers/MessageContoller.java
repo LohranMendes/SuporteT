@@ -33,10 +33,11 @@ public class MessageContoller {
     public List<ChatMessage> getAllMessagesFromCall(@PathVariable UUID callId) {
         var callOptional = callRepository.findById(callId);
         var call = callOptional.orElse(null);
+        var agentId = call!=null && call.getAgent()!=null? call.getAgent().getId():null;
         return chatMessageRepository.getMessagesByCall(call)
                 .stream()
                 .sorted(Comparator.comparing(Message::getDatetime))
-                .map(message -> new ChatMessage(message.getId(), message.getCall().getId(), message.getUser().getName(), message.getText(), message.getDatetime())).toList();
+                .map(message -> new ChatMessage(message.getId(), message.getCall().getId(),agentId, message.getUser().getName(),call.getTitle(), message.getText(), message.getDatetime())).toList();
     }
 
 
