@@ -39,7 +39,11 @@ function onConnected(frame) {
     else{
         const notificationTitle = document.getElementById('notification-title')
         const notificationText = document.getElementById('notification-text')
+        const actionCall = document.getElementById('actionCall')
         const json = JSON.parse(message.body);
+        var href = actionCall.getAttribute('href');
+        var novoHref = href+json.callId;
+        actionCall.setAttribute('href', novoHref);
 //        const isCurrentUser = json.userId === currentUserId
         notificationTitle.innerText = json.callTitle;
         notificationText.innerText = "O agente "+ json.sender + " respondeu sua chamada";
