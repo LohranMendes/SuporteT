@@ -153,16 +153,19 @@ public class CallController {
     public String ligar(@PathVariable("callId") UUID callId, @PathVariable("agentId") UUID agentId) {
         var callOptional = callRepository.findById(callId);
         var agent = userRepository.findById(agentId);
+        System.out.println("passou 1");
         if (!callOptional.isPresent() || !agent.isPresent()) {
             return "redirect:/";
         }
+        System.out.println("passou 2");
         if (agent.get().getRole() == UserRole.CONSUMER) {
             return "redirect:/";
         }
-
+        System.out.println("passou 3");
         if (callOptional.get().getAgent() != null) {
             return "redirect:/";
         }
+        System.out.println("passou por aq4");
         var call = callOptional.get();
         call.setAgent(agent.get());
         callRepository.save(call);

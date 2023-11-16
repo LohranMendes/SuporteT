@@ -77,7 +77,7 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <div th:each="tecnico:${tecnicos}" class="my-2">
-                                                                <form th:action="@{'/ligar/'+${call.id}+'/'+${tecnico.id}}" method="post"></form>
+                                                                <form th:action="@{'/ligar/'+${call.id}+'/'+${tecnico.id}}" method="post">
                                                                     <div class="d-flex justify-content-between align-items-center">
                                                                         <p class="mb-0" style="color: black;" th:text = "${tecnico.name}"></p>
                                                                         <button type="submit" class="btn-primary btn cb">Alocar</button>
